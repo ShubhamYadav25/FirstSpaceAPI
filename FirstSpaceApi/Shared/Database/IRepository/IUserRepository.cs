@@ -6,7 +6,7 @@ namespace FirstSpaceApi.Shared.Database.IRepository
     public interface IUserRepository
     {
         public IEnumerable<User> GetUserDetails();
-        public User GetUserDetailById(int id);
+        public User GetUserDetailById(string id);
         public User AddUser(User user);
         public User UpdateUser(User user);
         public User DeleteUser(string id);

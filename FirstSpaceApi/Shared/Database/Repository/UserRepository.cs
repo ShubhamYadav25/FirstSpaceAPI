@@ -1,4 +1,5 @@
-﻿using FirstSpaceApi.Shared.Database.IRepository;
+﻿using FirstSpaceApi.Services.IService;
+using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,10 +7,12 @@ namespace FirstSpaceApi.Shared.Database.Repository
 {
     public class UserRepository : IUserRepository
     {
-        readonly DatabaseContext _databaseContext;
-        public UserRepository(DatabaseContext databaseContext)
+        public readonly DatabaseContext _databaseContext;
+        public readonly ISharedService _sharedService;
+        public UserRepository(DatabaseContext databaseContext, ISharedService sharedService)
         {
             _databaseContext = databaseContext;
+            _sharedService = sharedService;
         }
 
         public IEnumerable<User> GetUserDetails()
@@ -24,11 +27,12 @@ namespace FirstSpaceApi.Shared.Database.Repository
             }
         }
 
-        public User GetUserDetailById(int id)
+        public User GetUserDetailById(string id)
         {
             try
             {
-                User? user = _databaseContext.User.Find(id);
+                Guid userId = _sharedService.ConvertStringToGuid(id);
+                User? user = _databaseContext.User.Find(userId);
                 if (user != null)
                 {
                     return user;
@@ -48,13 +52,14 @@ namespace FirstSpaceApi.Shared.Database.Repository
         {
             try
             {
-                 _databaseContext.User.AddAsync(user);
+                 user.UserId = Guid.NewGuid();
+                _databaseContext.User.Add(user);
                 
                 _databaseContext.SaveChanges();
 
                 // Get updated user data from db
                 // Remove if it cost expensive
-                //await _databaseContext.Entry(user).ReloadAsync();
+                _databaseContext.Entry(user).ReloadAsync();
                 return user;
             } catch (Exception ex) 
             {
@@ -82,7 +87,8 @@ namespace FirstSpaceApi.Shared.Database.Repository
         {
             try
             {
-                User? user = _databaseContext.User.Find(id);
+                Guid userId = _sharedService.ConvertStringToGuid(id);
+                User? user = _databaseContext.User.Find(userId);
                 
                 if (user != null)
                 {
