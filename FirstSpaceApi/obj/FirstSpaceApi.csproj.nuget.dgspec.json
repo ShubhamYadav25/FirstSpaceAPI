@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceAPI\\FirstSpaceApi\\FirstSpaceApi.csproj": {}
+    "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\FirstSpaceApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceAPI\\FirstSpaceApi\\FirstSpaceApi.csproj": {
+    "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\FirstSpaceApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceAPI\\FirstSpaceApi\\FirstSpaceApi.csproj",
+        "projectUniqueName": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\FirstSpaceApi.csproj",
         "projectName": "FirstSpaceApi",
-        "projectPath": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceAPI\\FirstSpaceApi\\FirstSpaceApi.csproj",
+        "projectPath": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\FirstSpaceApi.csproj",
         "packagesPath": "C:\\Users\\sy783\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceAPI\\FirstSpaceApi\\obj\\",
+        "outputPath": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
