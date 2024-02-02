@@ -32,6 +32,10 @@ namespace FirstSpaceApi.Shared.Database
                 entity.Property(e => e.Email).HasMaxLength(50).IsUnicode(false);
                 entity.Property(e => e.Password).HasMaxLength(20).IsUnicode(false);
                 entity.Property(e => e.CreatedDate).IsUnicode(false);
+                entity.Property(e => e.ModifiedDate).IsUnicode(false);
+                entity.Property(e => e.CreatedBy).IsUnicode(false);
+                entity.Property(e => e.ModifiedBy).IsUnicode(false);
+                entity.Property(e => e.Role).IsUnicode(false);
             });
 
 
