@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/FirstSpaceApi/FileContentIndex/54b30264-97c1-46fb-bf97-9e5f3c5614c1.vsidx
+/.vs/FirstSpaceApi/DesignTimeBuild
+/.vs/FirstSpaceApi/FileContentIndex
+/.vs/FirstSpaceApi/v17
+/.vs/ProjectEvaluation
+/FirstSpaceApi/bin/Debug/net8.0/runtimes/unix/lib/net6.0
+/FirstSpaceApi/bin/Debug/net8.0/appsettings.json
+/FirstSpaceApi/bin/Debug/net8.0/FirstSpaceApi.deps.json
+/FirstSpaceApi/bin/Debug/net8.0/FirstSpaceApi.dll
+/FirstSpaceApi/bin/Debug/net8.0/FirstSpaceApi.exe
+/FirstSpaceApi/bin/Debug/net8.0/FirstSpaceApi.pdb
+/FirstSpaceApi/bin/Debug/net8.0/FirstSpaceApi.runtimeconfig.json
+/.obj/Debug/net8.0/
+/FirstSpaceApi/obj/Debug/net8.0/ref/FirstSpaceApi.dll

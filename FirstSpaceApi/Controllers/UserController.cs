@@ -17,7 +17,7 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUserAsync()
+        public IActionResult GetAllUserAsync()
         {
             var allUsers =  _userRepository.GetUserDetails();
             if (allUsers == null)
@@ -29,7 +29,7 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<User>> CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] User user)
         {
             var addedUser = _userRepository.AddUser(user);
             if (addedUser == null)
@@ -41,7 +41,7 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<ActionResult<User>> GetUserByID(int userId)
+        public IActionResult GetUserByID(string userId)
         {
             var addedUser = _userRepository.GetUserDetailById(userId);
             if (addedUser == null)
@@ -53,7 +53,7 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpPut("UpdateUser")]
-        public async Task<ActionResult<User>> UpdateUser([FromBody] User user)
+        public IActionResult UpdateUser([FromBody] User user)
         {
             var updatedUser = _userRepository.UpdateUser(user);
             if (updatedUser == null)
@@ -65,7 +65,7 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpDelete("Remove/{userId}")]
-        public async Task<ActionResult<User>> RemoveUserById(string userId)
+        public IActionResult RemoveUserById(string userId)
         {
             var deletedUser = _userRepository.DeleteUser(userId);
             if (deletedUser == null)
