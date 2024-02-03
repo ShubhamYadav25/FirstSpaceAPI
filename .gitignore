@@ -17,3 +17,5 @@
 /.obj/Debug/net8.0/
 /FirstSpaceApi/obj/Debug/net8.0/ref/FirstSpaceApi.dll
 /FirstSpaceApi/obj/
+/FirstSpaceApi/bin/Debug/net8.0
+/FirstSpaceApi/obj/
