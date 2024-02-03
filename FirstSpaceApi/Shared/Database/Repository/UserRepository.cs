@@ -17,6 +17,7 @@ namespace FirstSpaceApi.Shared.Database.Repository
 
         public IEnumerable<User> GetUserDetails()
         {
+            throw new NotImplementedException("Dont know");
             try
             {
                 return _databaseContext.User.ToList();
