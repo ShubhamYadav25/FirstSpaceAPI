@@ -19,10 +19,17 @@ namespace FirstSpaceApi.Services.Service
         readonly DatabaseContext _databaseContext;
         public IConfiguration _configuration;
         public IGenericServices _genericServices;
-        public TokenServices(DatabaseContext databaseContext, IConfiguration configuration, IGenericServices genericServices)
-        {
+        private IFSLoggerServices _logger;
+
+        public TokenServices(
+            DatabaseContext databaseContext, 
+            IConfiguration configuration,
+            IFSLoggerServices logger,
+            IGenericServices genericServices
+        ) {
             _databaseContext = databaseContext;
             _configuration = configuration;
+            _logger = logger;
             _genericServices = genericServices;
         }
         public TokenResponseVM GetAccessToken(TokenRequestVM login)
@@ -53,6 +60,7 @@ namespace FirstSpaceApi.Services.Service
                         expires: DateTime.UtcNow.AddMinutes(10),
                         signingCredentials: signIn);
 
+                    _logger.LogInfo(new JwtSecurityTokenHandler().WriteToken(token));
                     return new TokenResponseVM { Token = new JwtSecurityTokenHandler().WriteToken(token) };
                 }
                 else
