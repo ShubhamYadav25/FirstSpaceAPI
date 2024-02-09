@@ -5,6 +5,7 @@ using FirstSpaceApi.Shared.Database;
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Database.Repository;
 using Microsoft.EntityFrameworkCore;
+using NLog;
 
 public class Startup
 {
@@ -20,9 +21,15 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        LogManager.LoadConfiguration(Path.Combine(Directory.GetCurrentDirectory(), "log.config.txt"));
+
         // Add services to the container.
         services.AddDbContext<DatabaseContext>
             (options => options.UseSqlServer("Data Source = SHUBHAM_YADAV; Initial Catalog = firstSpaceDb; Integrated Security = True; Encrypt = True; Trust Server Certificate=True"));
+
+        // Logger
+        services.AddSingleton<IFSLoggerServices, IFSLoggerServices>();
+
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<ITokenServices, TokenServices>();
         services.AddTransient<ISharedService, SharedService>();
