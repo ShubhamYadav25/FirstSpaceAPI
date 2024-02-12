@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "5Mx34upObzFAa0jDGrC7kIUy0B7NEE3kUFsxxKqHeN4I1/3EWRJeDDsgHCmBORaju5eYq7mpZWunBVPsXE2DPg==",
+  "dgSpecHash": "KdzP+hxooAli4ELioCrLMm7CK6HDSSAEmH4QY1Acuem2WRq0SgKgB49bqMbPIt8g33SdaDnM2tzpP93wZx9EcQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\sy783\\OneDrive\\Desktop\\Shubham Yadav\\Projects\\Room\\FirstSpaceApi\\FirstSpaceApi\\FirstSpaceApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\sy783\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\sy783\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\sy783\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\sy783\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\sy783\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.1\\microsoft.aspnetcore.authentication.jwtbearer.8.0.1.nupkg.sha512",

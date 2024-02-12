@@ -28,6 +28,9 @@ public class Startup
         services.AddDbContext<DatabaseContext>
             (options => options.UseSqlServer("Data Source = SHUBHAM_YADAV; Initial Catalog = firstSpaceDb; Integrated Security = True; Encrypt = True; Trust Server Certificate=True"));
 
+        // AutoMapper
+        services.AddAutoMapper(typeof(Program));
+
         // Logger
         services.AddSingleton<IFSLoggerServices, IFSLoggerServices>();
 
