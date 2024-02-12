@@ -2,20 +2,27 @@
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Shared.Database.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         public readonly DatabaseContext _databaseContext;
         public readonly ISharedService _sharedService;
-        public UserRepository(DatabaseContext databaseContext, ISharedService sharedService)
+        public UserRepository(DatabaseContext databaseContext, ISharedService sharedService) : base(databaseContext)
         {
             _databaseContext = databaseContext;
             _sharedService = sharedService;
         }
 
-        public IEnumerable<User> GetUserDetails()
+        public IEnumerable<User> GetAllUsers(bool trackChanges) =>
+                FindAll(trackChanges)
+               .OrderBy(c => c.CreatedDate)
+               .ToList();
+
+
+        IEnumerable<User> GetUserDetails()
         {
             throw new NotImplementedException("Dont know");
             try
@@ -28,7 +35,7 @@ namespace FirstSpaceApi.Shared.Database.Repository
             }
         }
 
-        public User GetUserDetailById(string id)
+        User GetUserDetailById(string id)
         {
             try
             {
@@ -37,7 +44,8 @@ namespace FirstSpaceApi.Shared.Database.Repository
                 if (user != null)
                 {
                     return user;
-                } else
+                }
+                else
                 {
                     // TODO : Create Custom Exception
                     throw new ArgumentNullException();
@@ -49,25 +57,27 @@ namespace FirstSpaceApi.Shared.Database.Repository
             }
         }
 
-        public User AddUser(User user)
+        User AddUser(User user)
         {
             try
             {
-                 user.UserId = Guid.NewGuid();
+                user.UserId = Guid.NewGuid();
                 _databaseContext.User.Add(user);
-                
+
                 _databaseContext.SaveChanges();
 
                 // Get updated user data from db
                 // Remove if it cost expensive
                 _databaseContext.Entry(user).ReloadAsync();
                 return user;
-            } catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 throw;
             }
         }
-        public User UpdateUser(User user)
+
+        User UpdateUser(User user)
         {
             try
             {
@@ -84,13 +94,14 @@ namespace FirstSpaceApi.Shared.Database.Repository
                 throw;
             }
         }
-        public User DeleteUser(string id)
+
+        User DeleteUser(string id)
         {
             try
             {
                 Guid userId = _sharedService.ConvertStringToGuid(id);
                 User? user = _databaseContext.User.Find(userId);
-                
+
                 if (user != null)
                 {
                     _databaseContext.User.Remove(user);
@@ -108,8 +119,5 @@ namespace FirstSpaceApi.Shared.Database.Repository
                 throw;
             }
         }
-
-
-
     }
 }

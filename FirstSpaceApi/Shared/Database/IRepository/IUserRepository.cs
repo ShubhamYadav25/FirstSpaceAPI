@@ -1,14 +1,13 @@
 ﻿using FirstSpaceApi.Shared.Models;
 using static FirstSpaceApi.Shared.Database.IRepository.IUserRepository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Shared.Database.IRepository
 {
     public interface IUserRepository
     {
-        public IEnumerable<User> GetUserDetails();
-        public User GetUserDetailById(string id);
-        public User AddUser(User user);
-        public User UpdateUser(User user);
-        public User DeleteUser(string id);
+        IEnumerable<User> GetAllUsers(bool trackChanges);
+
     }
 }
+                         
