@@ -6,6 +6,7 @@ using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Database.Repository;
 using Microsoft.EntityFrameworkCore;
 using NLog;
+using FSServiceProvider = FirstSpaceApi.Services.IService;
 
 public class Startup
 {
@@ -30,11 +31,20 @@ public class Startup
         // Logger
         services.AddSingleton<IFSLoggerServices, IFSLoggerServices>();
 
-        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddTransient<ITokenServices, TokenServices>();
         services.AddTransient<ISharedService, SharedService>();
+        services.AddScoped<IUserService,  UserService>();
         services.AddTransient<IGenericServices, GenericServices>();
 
+        // Service provider
+        services.AddScoped<FSServiceProvider.IServiceProvider, FirstSpaceApi.Services.Service.ServiceProvider>();
+
+
+        // Repository Manager 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        
         services.AddControllers();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
