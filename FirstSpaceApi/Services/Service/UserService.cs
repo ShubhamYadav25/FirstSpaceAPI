@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FirstSpaceApi.Services.IService;
 using FirstSpaceApi.Shared.Database.IRepository;
+using FirstSpaceApi.Shared.Domain.Exceptions;
 using FirstSpaceApi.Shared.Models;
 using static FirstSpaceApi.Shared.DTO.Dto;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -19,13 +20,13 @@ namespace FirstSpaceApi.Services.Service
             _mapper = mapper;
         }
 
-        public IEnumerable<UserDto> GetAllUser(bool trackChanges)
+        public IEnumerable<UserVM> GetAllUser(bool trackChanges)
         {
             try
             {
                 var users = _unitOfWork.UserRepository.GetAllUsers(trackChanges);
                 //var userDto = users.Select(c => new UserDto(c.UserId, c.FirstName, c.LastName, c.MiddleName ?? "", c.UserName, c.Email,c.Password, c.Role, string.Join(c.FirstName, ' ',c.MiddleName, c.LastName) ));
-                var userDto = _mapper.Map<IEnumerable<UserDto>>(users);
+                var userDto = _mapper.Map<IEnumerable<UserVM>>(users);
                 return userDto;
             }
             catch (Exception ex)
@@ -34,6 +35,29 @@ namespace FirstSpaceApi.Services.Service
                 throw;
             }
         }
+
+        public UserVM GetUserByID(Guid id, bool trackChanges)
+        {
+            try
+            {
+                var users = _unitOfWork.UserRepository.GetUserByID(id, trackChanges);
+
+                if(users == null)   
+                {
+                    throw new UserNotFoundException(id);
+                }
+
+                var userVM = _mapper.Map<UserVM>(users);
+
+                return userVM;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 
 }

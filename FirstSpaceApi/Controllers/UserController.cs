@@ -32,7 +32,7 @@ namespace FirstSpaceApi.Controllers
             }
         }
 
-        
+
         //[HttpPost("CreateUser")]
         //public IActionResult CreateUser([FromBody] User user)
         //{
@@ -45,17 +45,17 @@ namespace FirstSpaceApi.Controllers
         //    return Ok(addedUser);
         //}
 
-        //[HttpGet("{userId}")]
-        //public IActionResult GetUserByID(string userId)
-        //{
-        //    var addedUser = _userRepository.GetUserDetailById(userId);
-        //    if (addedUser == null)
-        //    {
-        //        return NotFound(); // No users found
-        //    }
+        [HttpGet("{userId}")]
+        public IActionResult GetUserByID(Guid userId)
+        {
+            var users = _serviceProvider.UserService.GetUserByID(userId, trackChanges: false);
+            if (users == null)
+            {
+                return NotFound(); // No users found
+            }
 
-        //    return Ok(addedUser);
-        //}
+            return Ok(users);
+        }
 
         //[HttpPut("UpdateUser")]
         //public IActionResult UpdateUser([FromBody] User user)

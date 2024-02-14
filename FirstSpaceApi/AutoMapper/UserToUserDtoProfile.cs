@@ -9,7 +9,7 @@ namespace FirstSpaceApi.AutoMapper
         public UserToUserDtoProfile() {
             
             // src to des
-            CreateMap<User, UserDto>()
+            CreateMap<User, UserVM>()
                 .ForCtorParam("FullName", user => user.MapFrom(u => string.Join(u.FirstName,u.MiddleName ,u.LastName)));
 
         }
