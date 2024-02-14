@@ -6,7 +6,9 @@ namespace FirstSpaceApi.Services.IService
 {
     public interface IUserService
     {
-        IEnumerable<UserDto> GetAllUser(bool trackChanges);
+        IEnumerable<UserVM> GetAllUser(bool trackChanges);
+
+        UserVM GetUserByID(Guid id, bool trackChanges);
 
     }
 }
