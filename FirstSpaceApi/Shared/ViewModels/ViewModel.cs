@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 
 namespace FirstSpaceApi.Shared.ViewModels
 {
@@ -6,18 +8,19 @@ namespace FirstSpaceApi.Shared.ViewModels
     {
         public class ErrorResponseVM
         {
-            public HttpStatusCode Code;
+            public int StatusCode;
             public string Message;
 
             public ErrorResponseVM() {
             
             }
-            public ErrorResponseVM(HttpStatusCode httpStatusCode, string message)
+            public ErrorResponseVM(int httpStatusCode, string message)
             {
-                Code = httpStatusCode;
+                StatusCode = httpStatusCode;
                 Message = message;
             }
 
+            public override string ToString() => JsonConvert.SerializeObject(this);
 
         }
     }

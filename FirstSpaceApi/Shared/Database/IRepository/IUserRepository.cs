@@ -8,6 +8,8 @@ namespace FirstSpaceApi.Shared.Database.IRepository
     {
         IEnumerable<User> GetAllUsers(bool trackChanges);
 
+        User GetUserByID(Guid id, bool trackChanges);
+
     }
 }
                          

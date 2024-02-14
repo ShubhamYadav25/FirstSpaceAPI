@@ -21,6 +21,10 @@ namespace FirstSpaceApi.Shared.Database.Repository
                .OrderBy(c => c.CreatedDate)
                .ToList();
 
+        public User GetUserByID(Guid id, bool trackChanges)
+        {
+            return FindByCondition(c => c.UserId.Equals(id), trackChanges).SingleOrDefault();
+        }
 
         IEnumerable<User> GetUserDetails()
         {
