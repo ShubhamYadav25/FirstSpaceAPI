@@ -11,6 +11,8 @@ namespace FirstSpaceApi.Shared.Database.IRepository
         User GetUserByID(Guid id, bool trackChanges);
         
         void CreateUser(User user);
+
+        void DeleteUser(User user);
     }
 }
                          

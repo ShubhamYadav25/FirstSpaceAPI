@@ -4,7 +4,6 @@ using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Domain.Exceptions;
 using FirstSpaceApi.Shared.Models;
 using static FirstSpaceApi.Shared.DTO.Dto;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Services.Service
 {
@@ -62,6 +61,32 @@ namespace FirstSpaceApi.Services.Service
             _unitOfWork.SaveChanges();
 
             return _mapper.Map<UserResponseVM>(userentity);
+        }
+
+        public void DeleteUser(Guid userId, bool trackChanges)
+        {
+            var user = _unitOfWork.UserRepository.GetUserByID(userId, false);
+
+            if(user == null)
+            {
+                throw new UserNotFoundException(userId);
+            }
+
+            _unitOfWork.UserRepository.DeleteUser(user);
+            _unitOfWork.SaveChanges();
+        }
+
+        public void UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges)
+        {
+            var user = _unitOfWork.UserRepository.GetUserByID(userId, false);
+
+            if( user == null)
+            {
+                throw new UserNotFoundException(userId);
+            }
+
+            _mapper.Map(userToUpdate, user);
+            _unitOfWork.SaveChanges();
         }
 
     }
