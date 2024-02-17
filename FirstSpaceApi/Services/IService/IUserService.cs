@@ -12,5 +12,8 @@ namespace FirstSpaceApi.Services.IService
 
         UserResponseVM CreateUser(UserRequestVM user);
 
+        void DeleteUser(Guid userId, bool trackChanges);
+
+        public void UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges);
     }
 }

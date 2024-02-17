@@ -60,30 +60,21 @@ namespace FirstSpaceApi.Controllers
             return Ok(users);
         }
 
-        //[HttpPut("UpdateUser")]
-        //public IActionResult UpdateUser([FromBody] User user)
-        //{
-        //    var updatedUser = _userRepository.UpdateUser(user);
-        //    if (updatedUser == null)
-        //    {
-        //        return NotFound(); // No users found
-        //    }
+        [HttpPut("UpdateUser/{userId}")]
+        public IActionResult UpdateUser(Guid userId, [FromBody] UserRequestVM user)
+        {
+            _serviceProvider.UserService.UpdateUser(userId, user, false);
 
-        //    return Ok(updatedUser);
-        //}
+            return NoContent();
+        }
 
-        //[HttpDelete("Remove/{userId}")]
-        //public IActionResult RemoveUserById(string userId)
-        //{
-        //    var deletedUser = _userRepository.DeleteUser(userId);
-        //    if (deletedUser == null)
-        //    {
-        //        return NotFound(); // No users found
-        //    }
-
-        //    return Ok(deletedUser);
-        //}
-
+        [HttpDelete("Remove/{userId}")]
+        public IActionResult RemoveUserById(Guid userId)
+        {
+            _serviceProvider.UserService.DeleteUser(userId, false);
+           
+            return NoContent();
+        }
 
     }
 }
