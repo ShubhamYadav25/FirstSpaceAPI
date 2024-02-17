@@ -26,6 +26,9 @@ namespace FirstSpaceApi.Shared.Database.Repository
             return FindByCondition(c => c.UserId.Equals(id), trackChanges).SingleOrDefault();
         }
 
+        public void CreateUser(User user) => Create(user);
+
+
         IEnumerable<User> GetUserDetails()
         {
             throw new NotImplementedException("Dont know");

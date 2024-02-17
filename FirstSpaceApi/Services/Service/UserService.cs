@@ -20,13 +20,13 @@ namespace FirstSpaceApi.Services.Service
             _mapper = mapper;
         }
 
-        public IEnumerable<UserVM> GetAllUser(bool trackChanges)
+        public IEnumerable<UserResponseVM> GetAllUser(bool trackChanges)
         {
             try
             {
                 var users = _unitOfWork.UserRepository.GetAllUsers(trackChanges);
                 //var userDto = users.Select(c => new UserDto(c.UserId, c.FirstName, c.LastName, c.MiddleName ?? "", c.UserName, c.Email,c.Password, c.Role, string.Join(c.FirstName, ' ',c.MiddleName, c.LastName) ));
-                var userDto = _mapper.Map<IEnumerable<UserVM>>(users);
+                var userDto = _mapper.Map<IEnumerable<UserResponseVM>>(users);
                 return userDto;
             }
             catch (Exception ex)
@@ -36,26 +36,32 @@ namespace FirstSpaceApi.Services.Service
             }
         }
 
-        public UserVM GetUserByID(Guid id, bool trackChanges)
+        public UserResponseVM GetUserByID(Guid id, bool trackChanges)
         {
             try
             {
                 var users = _unitOfWork.UserRepository.GetUserByID(id, trackChanges);
-
                 if(users == null)   
                 {
                     throw new UserNotFoundException(id);
                 }
-
-                var userVM = _mapper.Map<UserVM>(users);
-
+                var userVM = _mapper.Map<UserResponseVM>(users);
                 return userVM;
             }
             catch (Exception)
             {
-
                 throw;
             }
+        }
+
+        public UserResponseVM CreateUser(UserRequestVM user)
+        {
+            var userentity = _mapper.Map<User>(user);
+
+            _unitOfWork.UserRepository.CreateUser(userentity);
+            _unitOfWork.SaveChanges();
+
+            return _mapper.Map<UserResponseVM>(userentity);
         }
 
     }

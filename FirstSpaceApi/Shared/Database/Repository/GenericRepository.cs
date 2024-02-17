@@ -19,5 +19,5 @@ namespace FirstSpaceApi.Shared.Database.Repository
         public void Update(T entity) => _databaseContext.Set<T>().Update(entity);
         public void Delete(T entity) => _databaseContext.Set<T>().Remove(entity);
 
-    }
+    } 
 }
