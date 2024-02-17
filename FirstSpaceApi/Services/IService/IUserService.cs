@@ -6,14 +6,14 @@ namespace FirstSpaceApi.Services.IService
 {
     public interface IUserService
     {
-        IEnumerable<UserResponseVM> GetAllUser(bool trackChanges);
+        Task<IEnumerable<UserResponseVM>> GetAllUser(bool trackChanges);
 
-        UserResponseVM GetUserByID(Guid id, bool trackChanges);
+        Task<UserResponseVM> GetUserByID(Guid id, bool trackChanges);
 
-        UserResponseVM CreateUser(UserRequestVM user);
+        Task<UserResponseVM> CreateUser(UserRequestVM user);
 
-        void DeleteUser(Guid userId, bool trackChanges);
+        Task DeleteUser(Guid userId, bool trackChanges);
 
-        public void UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges);
+        public Task UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges);
     }
 }

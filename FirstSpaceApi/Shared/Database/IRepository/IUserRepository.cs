@@ -6,9 +6,9 @@ namespace FirstSpaceApi.Shared.Database.IRepository
 {
     public interface IUserRepository
     {
-        IEnumerable<User> GetAllUsers(bool trackChanges);
+        Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges);
 
-        User GetUserByID(Guid id, bool trackChanges);
+        Task<User> GetUserByIDAsync(Guid id, bool trackChanges);
         
         void CreateUser(User user);
 
