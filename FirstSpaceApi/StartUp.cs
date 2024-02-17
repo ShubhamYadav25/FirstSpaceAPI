@@ -48,7 +48,7 @@ public class Startup
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         
-        services.AddControllers();
+        services.AddControllers().AddNewtonsoftJson();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

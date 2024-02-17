@@ -2,6 +2,7 @@
 using FirstSpaceApi.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static FirstSpaceApi.Shared.DTO.Dto;
 using FSServiceProvider = FirstSpaceApi.Services.IService;
 
 namespace FirstSpaceApi.Controllers
@@ -33,17 +34,19 @@ namespace FirstSpaceApi.Controllers
         }
 
 
-        //[HttpPost("CreateUser")]
-        //public IActionResult CreateUser([FromBody] User user)
-        //{
-        //    var addedUser = _userRepository.AddUser(user);
-        //    if (addedUser == null)
-        //    {
-        //        return NotFound(); // No users found
-        //    }
+        [HttpPost("CreateUser")]
+        public IActionResult CreateUser([FromBody] UserRequestVM user)
+        {
+            if (user == null)
+            {
+                return BadRequest("user object is null")    ;
+            }
 
-        //    return Ok(addedUser);
-        //}
+            var userResponseVM = _serviceProvider.UserService.CreateUser(user);
+
+            //return CreatedAtRoute("GetUserByID", new { id = userResponseVM.UserId }, userResponseVM);
+            return Ok(userResponseVM);
+        }
 
         [HttpGet("{userId}")]
         public IActionResult GetUserByID(Guid userId)
