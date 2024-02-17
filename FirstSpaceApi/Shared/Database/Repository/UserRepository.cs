@@ -16,14 +16,14 @@ namespace FirstSpaceApi.Shared.Database.Repository
             _sharedService = sharedService;
         }
 
-        public IEnumerable<User> GetAllUsers(bool trackChanges) =>
-                FindAll(trackChanges)
+        public async Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges) =>
+                await FindAll(trackChanges)
                .OrderBy(c => c.CreatedDate)
-               .ToList();
+               .ToListAsync();
 
-        public User GetUserByID(Guid id, bool trackChanges)
+        public async Task<User> GetUserByIDAsync(Guid id, bool trackChanges)
         {
-            return FindByCondition(c => c.UserId.Equals(id), trackChanges).SingleOrDefault();
+            return await FindByCondition(c => c.UserId.Equals(id), trackChanges).SingleOrDefaultAsync();
         }
 
         public void CreateUser(User user) => Create(user);
