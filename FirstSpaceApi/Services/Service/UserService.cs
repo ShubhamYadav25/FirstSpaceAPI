@@ -3,7 +3,9 @@ using FirstSpaceApi.Services.IService;
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Domain.Exceptions;
 using FirstSpaceApi.Shared.Models;
+using FirstSpaceApi.Shared.ViewModels;
 using static FirstSpaceApi.Shared.DTO.Dto;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 
 namespace FirstSpaceApi.Services.Service
 {
@@ -19,14 +21,14 @@ namespace FirstSpaceApi.Services.Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserResponseVM>> GetAllUser(bool trackChanges)
+        public async Task<(IEnumerable<UserResponseVM> users, MetaData metaData)> GetAllUser(UserPagingVM userPagingVM, bool trackChanges)
         {
             try
             {
-                var users = await _unitOfWork.UserRepository.GetAllUsersAsync(trackChanges);
+                var users = await _unitOfWork.UserRepository.GetAllUsersAsync(userPagingVM, trackChanges);
                 //var userDto = users.Select(c => new UserDto(c.UserId, c.FirstName, c.LastName, c.MiddleName ?? "", c.UserName, c.Email,c.Password, c.Role, string.Join(c.FirstName, ' ',c.MiddleName, c.LastName) ));
                 var userDto = _mapper.Map<IEnumerable<UserResponseVM>>(users);
-                return userDto;
+                return (users: userDto, metaData: users.metaData);
             }
             catch (Exception ex)
             {

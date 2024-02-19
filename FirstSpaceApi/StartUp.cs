@@ -47,7 +47,16 @@ public class Startup
         // Repository Manager 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        
+        // CORS
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", builder =>
+            builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("X-Pagination"));
+        });
+
         services.AddControllers().AddNewtonsoftJson();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

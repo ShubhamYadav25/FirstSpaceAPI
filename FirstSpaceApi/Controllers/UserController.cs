@@ -2,7 +2,9 @@
 using FirstSpaceApi.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using static FirstSpaceApi.Shared.DTO.Dto;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using FSServiceProvider = FirstSpaceApi.Services.IService;
 
 namespace FirstSpaceApi.Controllers
@@ -19,19 +21,22 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUserAsync()
+        public async Task<IActionResult> GetAllUserAsync([FromQuery] UserPagingVM userPagingVM)
         {
             try
             {
-                var users = await _serviceProvider.UserService.GetAllUser(trackChanges: false);
-                return Ok(users);
+                var pagedResult = await _serviceProvider.UserService.GetAllUser(userPagingVM, trackChanges: false);
+                
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+
+                return Ok(pagedResult.users);
             }
             catch
             {
                 return StatusCode(500, "Internal server error");
 
             }
-        }
+        }   
 
 
         [HttpPost("CreateUser")]
