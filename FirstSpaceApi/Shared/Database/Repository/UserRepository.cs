@@ -1,6 +1,7 @@
 ﻿using FirstSpaceApi.Services.IService;
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Models;
+using FirstSpaceApi.Shared.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -17,13 +18,14 @@ namespace FirstSpaceApi.Shared.Database.Repository
             _sharedService = sharedService;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync(UserPagingVM userPagingVM, bool trackChanges) =>
-                await FindAll(trackChanges)
-               .OrderBy(c => c.CreatedDate)
-               .Skip((userPagingVM.PageNumber - 1) * userPagingVM.PageSize)
-               .Take(userPagingVM.PageSize)
-               .ToListAsync();
+        public async Task<PagedList<User>> GetAllUsersAsync(UserPagingVM userPagingVM, bool trackChanges)
+        {
+            var users = await FindAll(trackChanges)
+                            .OrderBy(c => c.CreatedDate)
+                            .ToListAsync();
 
+            return PagedList<User>.ToPagedList(users, userPagingVM.PageNumber, userPagingVM.PageSize);
+        }
         public async Task<User> GetUserByIDAsync(Guid id, bool trackChanges)
         {
             return await FindByCondition(c => c.UserId.Equals(id), trackChanges).SingleOrDefaultAsync();

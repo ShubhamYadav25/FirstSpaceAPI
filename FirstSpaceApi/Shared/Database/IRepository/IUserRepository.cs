@@ -1,4 +1,5 @@
 ﻿using FirstSpaceApi.Shared.Models;
+using FirstSpaceApi.Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using static FirstSpaceApi.Shared.Database.IRepository.IUserRepository;
 using static FirstSpaceApi.Shared.ViewModels.ViewModel;
@@ -8,7 +9,7 @@ namespace FirstSpaceApi.Shared.Database.IRepository
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsersAsync(UserPagingVM userPagingVM,bool trackChanges);
+        Task<PagedList<User>> GetAllUsersAsync(UserPagingVM userPagingVM,bool trackChanges);
 
         Task<User> GetUserByIDAsync(Guid id, bool trackChanges);
         
@@ -17,4 +18,4 @@ namespace FirstSpaceApi.Shared.Database.IRepository
         void DeleteUser(User user);
     }
 }
-                         
+                            

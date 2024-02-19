@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FirstSpaceApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b9d879af124e0f4045a49b2cf5ed5420dd0345e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b3eae9ef5ce9024fdb2daad289c57188e12b64af")]
 [assembly: System.Reflection.AssemblyProductAttribute("FirstSpaceApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FirstSpaceApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
