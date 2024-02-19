@@ -1,12 +1,14 @@
 ﻿using FirstSpaceApi.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
 using static FirstSpaceApi.Shared.Database.IRepository.IUserRepository;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Shared.Database.IRepository
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges);
+        Task<IEnumerable<User>> GetAllUsersAsync(UserPagingVM userPagingVM,bool trackChanges);
 
         Task<User> GetUserByIDAsync(Guid id, bool trackChanges);
         

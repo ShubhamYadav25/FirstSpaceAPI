@@ -2,6 +2,7 @@
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Shared.Database.Repository
@@ -16,9 +17,11 @@ namespace FirstSpaceApi.Shared.Database.Repository
             _sharedService = sharedService;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges) =>
+        public async Task<IEnumerable<User>> GetAllUsersAsync(UserPagingVM userPagingVM, bool trackChanges) =>
                 await FindAll(trackChanges)
                .OrderBy(c => c.CreatedDate)
+               .Skip((userPagingVM.PageNumber - 1) * userPagingVM.PageSize)
+               .Take(userPagingVM.PageSize)
                .ToListAsync();
 
         public async Task<User> GetUserByIDAsync(Guid id, bool trackChanges)
