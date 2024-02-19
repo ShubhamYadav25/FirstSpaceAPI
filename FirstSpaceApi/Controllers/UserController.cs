@@ -2,7 +2,9 @@
 using FirstSpaceApi.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using static FirstSpaceApi.Shared.DTO.Dto;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using FSServiceProvider = FirstSpaceApi.Services.IService;
 
 namespace FirstSpaceApi.Controllers
@@ -19,39 +21,42 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllUserAsync()
+        public async Task<IActionResult> GetAllUserAsync([FromQuery] UserPagingVM userPagingVM)
         {
             try
             {
-                var users = _serviceProvider.UserService.GetAllUser(trackChanges: false);
-                return Ok(users);
+                var pagedResult = await _serviceProvider.UserService.GetAllUser(userPagingVM, trackChanges: false);
+                
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+
+                return Ok(pagedResult.users);
             }
             catch
             {
                 return StatusCode(500, "Internal server error");
 
             }
-        }
+        }   
 
 
         [HttpPost("CreateUser")]
-        public IActionResult CreateUser([FromBody] UserRequestVM user)
+        public async Task<IActionResult> CreateUser([FromBody] UserRequestVM user)
         {
             if (user == null)
             {
                 return BadRequest("user object is null")    ;
             }
 
-            var userResponseVM = _serviceProvider.UserService.CreateUser(user);
+            var userResponseVM = await _serviceProvider.UserService.CreateUser(user);
 
             //return CreatedAtRoute("GetUserByID", new { id = userResponseVM.UserId }, userResponseVM);
             return Ok(userResponseVM);
         }
 
         [HttpGet("{userId}")]
-        public IActionResult GetUserByID(Guid userId)
+        public async Task<IActionResult> GetUserByID(Guid userId)
         {
-            var users = _serviceProvider.UserService.GetUserByID(userId, trackChanges: false);
+            var users = await _serviceProvider.UserService.GetUserByID(userId, trackChanges: false);
             if (users == null)
             {
                 return NotFound(); // No users found
@@ -61,17 +66,17 @@ namespace FirstSpaceApi.Controllers
         }
 
         [HttpPut("UpdateUser/{userId}")]
-        public IActionResult UpdateUser(Guid userId, [FromBody] UserRequestVM user)
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody] UserRequestVM user)
         {
-            _serviceProvider.UserService.UpdateUser(userId, user, false);
+            await _serviceProvider.UserService.UpdateUser(userId, user, false);
 
             return NoContent();
         }
 
         [HttpDelete("Remove/{userId}")]
-        public IActionResult RemoveUserById(Guid userId)
+        public async Task<IActionResult> RemoveUserById(Guid userId)
         {
-            _serviceProvider.UserService.DeleteUser(userId, false);
+            await _serviceProvider.UserService.DeleteUser(userId, false);
            
             return NoContent();
         }

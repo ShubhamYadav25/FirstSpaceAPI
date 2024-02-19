@@ -17,9 +17,9 @@ namespace FirstSpaceApi.Shared.Database.Repository
 
         public IUserRepository UserRepository => _userRepository.Value;
 
-        void IUnitOfWork.SaveChanges()
+        async Task IUnitOfWork.SaveChangeAsync()
         {
-            _databaseContext.SaveChanges();
+            await _databaseContext.SaveChangesAsync();
         }
     }
 }

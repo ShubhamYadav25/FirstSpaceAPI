@@ -3,7 +3,9 @@ using FirstSpaceApi.Services.IService;
 using FirstSpaceApi.Shared.Database.IRepository;
 using FirstSpaceApi.Shared.Domain.Exceptions;
 using FirstSpaceApi.Shared.Models;
+using FirstSpaceApi.Shared.ViewModels;
 using static FirstSpaceApi.Shared.DTO.Dto;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 
 namespace FirstSpaceApi.Services.Service
 {
@@ -19,14 +21,14 @@ namespace FirstSpaceApi.Services.Service
             _mapper = mapper;
         }
 
-        public IEnumerable<UserResponseVM> GetAllUser(bool trackChanges)
+        public async Task<(IEnumerable<UserResponseVM> users, MetaData metaData)> GetAllUser(UserPagingVM userPagingVM, bool trackChanges)
         {
             try
             {
-                var users = _unitOfWork.UserRepository.GetAllUsers(trackChanges);
+                var users = await _unitOfWork.UserRepository.GetAllUsersAsync(userPagingVM, trackChanges);
                 //var userDto = users.Select(c => new UserDto(c.UserId, c.FirstName, c.LastName, c.MiddleName ?? "", c.UserName, c.Email,c.Password, c.Role, string.Join(c.FirstName, ' ',c.MiddleName, c.LastName) ));
                 var userDto = _mapper.Map<IEnumerable<UserResponseVM>>(users);
-                return userDto;
+                return (users: userDto, metaData: users.metaData);
             }
             catch (Exception ex)
             {
@@ -35,11 +37,11 @@ namespace FirstSpaceApi.Services.Service
             }
         }
 
-        public UserResponseVM GetUserByID(Guid id, bool trackChanges)
+        public async Task<UserResponseVM> GetUserByID(Guid id, bool trackChanges)
         {
             try
             {
-                var users = _unitOfWork.UserRepository.GetUserByID(id, trackChanges);
+                var users = await _unitOfWork.UserRepository.GetUserByIDAsync(id, trackChanges);
                 if(users == null)   
                 {
                     throw new UserNotFoundException(id);
@@ -53,19 +55,19 @@ namespace FirstSpaceApi.Services.Service
             }
         }
 
-        public UserResponseVM CreateUser(UserRequestVM user)
+        public async Task<UserResponseVM> CreateUser(UserRequestVM user)
         {
             var userentity = _mapper.Map<User>(user);
 
             _unitOfWork.UserRepository.CreateUser(userentity);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangeAsync();
 
             return _mapper.Map<UserResponseVM>(userentity);
         }
 
-        public void DeleteUser(Guid userId, bool trackChanges)
+        public async Task DeleteUser(Guid userId, bool trackChanges)
         {
-            var user = _unitOfWork.UserRepository.GetUserByID(userId, false);
+            var user = await _unitOfWork.UserRepository.GetUserByIDAsync(userId, false);
 
             if(user == null)
             {
@@ -73,12 +75,12 @@ namespace FirstSpaceApi.Services.Service
             }
 
             _unitOfWork.UserRepository.DeleteUser(user);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangeAsync();
         }
 
-        public void UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges)
+        public async Task UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges)
         {
-            var user = _unitOfWork.UserRepository.GetUserByID(userId, false);
+            var user = await _unitOfWork.UserRepository.GetUserByIDAsync(userId, false);
 
             if( user == null)
             {
@@ -86,7 +88,7 @@ namespace FirstSpaceApi.Services.Service
             }
 
             _mapper.Map(userToUpdate, user);
-            _unitOfWork.SaveChanges();
+            await _unitOfWork.SaveChangeAsync();
         }
 
     }

@@ -1,19 +1,21 @@
 ﻿using FirstSpaceApi.Shared.Models;
+using FirstSpaceApi.Shared.ViewModels;
 using static FirstSpaceApi.Shared.DTO.Dto;
+using static FirstSpaceApi.Shared.ViewModels.ViewModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FirstSpaceApi.Services.IService
 {
     public interface IUserService
     {
-        IEnumerable<UserResponseVM> GetAllUser(bool trackChanges);
+        Task<(IEnumerable<UserResponseVM> users, MetaData metaData)> GetAllUser(UserPagingVM userPagingVM, bool trackChanges);
 
-        UserResponseVM GetUserByID(Guid id, bool trackChanges);
+        Task<UserResponseVM> GetUserByID(Guid id, bool trackChanges);
 
-        UserResponseVM CreateUser(UserRequestVM user);
+        Task<UserResponseVM> CreateUser(UserRequestVM user);
 
-        void DeleteUser(Guid userId, bool trackChanges);
+        Task DeleteUser(Guid userId, bool trackChanges);
 
-        public void UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges);
+        public Task UpdateUser(Guid userId, UserRequestVM userToUpdate, bool trackChanges);
     }
 }
