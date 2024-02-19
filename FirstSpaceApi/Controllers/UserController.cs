@@ -36,7 +36,7 @@ namespace FirstSpaceApi.Controllers
                 return StatusCode(500, "Internal server error");
 
             }
-        }
+        }   
 
 
         [HttpPost("CreateUser")]

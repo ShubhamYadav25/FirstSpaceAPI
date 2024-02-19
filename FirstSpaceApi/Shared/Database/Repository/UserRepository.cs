@@ -22,9 +22,13 @@ namespace FirstSpaceApi.Shared.Database.Repository
         {
             var users = await FindAll(trackChanges)
                             .OrderBy(c => c.CreatedDate)
+                            .Skip((userPagingVM.PageNumber - 1) * userPagingVM.PageSize)
+                            .Take(userPagingVM.PageSize)
                             .ToListAsync();
 
-            return PagedList<User>.ToPagedList(users, userPagingVM.PageNumber, userPagingVM.PageSize);
+            var count = await FindAll(trackChanges).CountAsync();
+
+            return new PagedList<User>(users, count,  userPagingVM.PageNumber, userPagingVM.PageSize);
         }
         public async Task<User> GetUserByIDAsync(Guid id, bool trackChanges)
         {
