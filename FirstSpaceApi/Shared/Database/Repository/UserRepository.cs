@@ -22,6 +22,7 @@ namespace FirstSpaceApi.Shared.Database.Repository
         {
             var users = await FindAll(trackChanges)
                             .OrderBy(c => c.CreatedDate)
+                            .Search(userPagingVM.SearchTerm)
                             .Skip((userPagingVM.PageNumber - 1) * userPagingVM.PageSize)
                             .Take(userPagingVM.PageSize)
                             .ToListAsync();
