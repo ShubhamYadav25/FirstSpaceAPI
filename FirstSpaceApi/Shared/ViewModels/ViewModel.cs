@@ -45,6 +45,10 @@ namespace FirstSpaceApi.Shared.ViewModels
         public class UserPagingVM : PagingVM
         {
 
+            // Extend to search item 
+            // Searching compatibility
+            public string? SearchTerm { get; set; }
+
         }
     }
 }
